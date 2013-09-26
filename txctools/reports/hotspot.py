@@ -2,7 +2,9 @@
 Generates a report of hotspot problem areas, according to the most warnings.
 """
 
+from __future__ import division
 from txctools import tools
+import math
 
 
 class HotspotReport:
@@ -45,13 +47,28 @@ class HotspotReport:
             key=lambda x: x[1]["warning_count"], reverse=True)
 
         output += "Warnings per File\n=================\n"
-
         count = 0
 
         for item in fileResults:
             count += 1
-            output += "#%s - %s - %s\n" %(count, item[0],
+            output += "#%s - %s - %s\n" % (count, item[0],
                 item[1]["warning_count"])
+
+        output += "\nWarnings Breakdown\n==================\n"
+        count = 0
+        warningCount = 0
+
+        warningResults = sorted(self.warningCounts.items(),
+            key=lambda x: x[1]["count"], reverse=True)
+
+        for item in warningResults:
+            warningCount += item[1]["count"]
+
+        for warning, winfo in warningResults:
+            count += 1
+            output += "#%s - %s - %s (%s%%) - %s\n" % (count, warning,
+                winfo["count"], int(winfo["count"] / warningCount * 100),
+                tools.cleanupMessage(warning, winfo))
 
         return output
 
@@ -62,10 +79,12 @@ class HotspotReport:
             warningCount = {}
 
         for warning in warnings:
-
-            if not warningCount.get(warning["warning_id"]):
-                warningCount[warning["warning_id"]] = 1
+            wID = warning["warning_id"]
+            if not warningCount.get(wID):
+                warningCount[wID] = {}
+                warningCount[wID]["count"] = 1
+                warningCount[wID]["message"] = warning.get("warning_message")
             else:
-                warningCount[warning["warning_id"]] += 1
+                warningCount[wID]["count"] += 1
 
         return warningCount

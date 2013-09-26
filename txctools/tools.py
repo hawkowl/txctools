@@ -4,7 +4,6 @@ Some helpful tools.
 
 import re
 
-
 # Regex from https://gist.github.com/andialbrecht/917126
 P_PYLINT_ERROR = re.compile(r"^(?P<file>.+?):(?P<line>[0-9]+):\ \[(?P<type>"
     "[a-z])(?P<errno>\d+) (,\ (?P<hint>.+))?\]\ (?P<msg>.*)",
@@ -36,13 +35,25 @@ def parsePyLintWarnings(warnings):
             warningEntry = {
                 "line": matchDict.get("file"),
                 "warning_id": matchDict.get("type") + matchDict.get("errno"),
-                "warning_hint": matchDict.get("hint"),
             }
 
-            if matchDict.get("warning_message"):
-                warningEntry["warning_message"] = matchDict.get(
-                    "warning_message")
+            if matchDict.get("msg"):
+                warningEntry["warning_message"] = matchDict.get("msg")
 
             warningsDict[matchDict["file"]].append(warningEntry)
 
     return warningsDict
+
+
+
+def cleanupMessage(warning, winfo):
+
+    cleanupItems = {
+        "C0301": "Line too long",
+        "C0103": "Invalid function/variable name"
+    }
+
+    if warning in cleanupItems:
+        return cleanupItems[warning]
+    else:
+        return winfo["message"]
