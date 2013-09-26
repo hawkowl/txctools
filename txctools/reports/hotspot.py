@@ -8,9 +8,25 @@ import math
 
 
 class HotspotReport:
+    """
+    Hotspot report generator.
+
+    @ivar warnings: See L{__init__}
+
+    @ivar fileCounts: L{dict} of L{dict}s that contains information about the
+        warnings in a file.
+
+    @ivar warningCounts: L{dict} of L{dict}s that contains information about
+        warnings in the project.
+    """
 
     def __init__(self, warnings):
+        """
+        Set up the Hotspot Report, and process the warnings, if need be.
 
+        @param warnings: Either a L{dict} from {tools.parsePyLintWarnings} or a
+            L{list} of pyLint parseable output.
+        """
         if isinstance(warnings, dict):
             self.warnings = warnings
         else:
@@ -21,7 +37,9 @@ class HotspotReport:
 
 
     def process(self):
-
+        """
+        Process the warnings.
+        """
         for filename, warnings in self.warnings.iteritems():
 
             self.fileCounts[filename] = {}
@@ -34,13 +52,17 @@ class HotspotReport:
 
 
     def deliverRawResults(self):
+        """
+        Deliver the results in their raw form.
 
+        @return: L{tuple} of L{fileCounts} and L{warningCounts}.
+        """
         return (self.fileCounts, self.warningCounts)
 
 
     def deliverTextResults(self):
 
-        output = "=======================\ntxctools HotSpot Report\n"\
+        output = "=======================\ntxctools Hotspot Report\n"\
         "=======================\n\n"
 
         fileResults = sorted(self.fileCounts.items(),
