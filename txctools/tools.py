@@ -49,14 +49,15 @@ def parsePyLintWarnings(warnings):
 def cleanupMessage(warning, winfo):
 
     cleanupItems = {
-        "C0301": "Line too long",
+        "C0102": "Blacklisted name"
         "C0103": "Invalid function/variable name",
+        "C0301": "Line too long",
         "C0302": "Too many lines in module",
-        "W9202": "Missing epytext @param",
-        "W9012": "Expected 2 blank lines",
-        "W9013": "Expected 2 blank lines",
-        "W9015": "Too many blank lines",
         "W0311": "Bad indentation"
+        "W9012": "Expected 2 blank lines",
+        "W9013": "Expected 3 blank lines",
+        "W9015": "Too many blank lines",
+        "W9202": "Missing epytext @param",
     }
 
     if warning in cleanupItems:
