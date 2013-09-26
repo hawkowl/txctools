@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import sys
 import os
+import json
 
 sys.path.insert(0, os.path.abspath(os.getcwd()))
 
-from txctools import Jsoniser
+from txctools import parsePyLintWarnings
 
-j = Jsoniser(sys.stdin)
-print j.parse()
+print json.dumps(parsePyLintWarnings(sys.stdin))

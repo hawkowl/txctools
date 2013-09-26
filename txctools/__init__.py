@@ -1,1 +1,5 @@
-from txctools.jsoniser import Jsoniser
+"""
+txctools - TwistedChecker tools
+"""
+
+from txctools.tools import parsePyLintWarnings
