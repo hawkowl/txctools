@@ -49,7 +49,7 @@ def parsePyLintWarnings(warnings):
 def cleanupMessage(warning, winfo):
 
     cleanupItems = {
-        "C0102": "Blacklisted name"
+        "C0102": "Blacklisted name",
         "C0103": "Invalid function/variable name",
         "C0301": "Line too long",
         "C0302": "Too many lines in module",
