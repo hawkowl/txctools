@@ -35,8 +35,7 @@ def parsePyLintWarnings(warnings):
 
             warningEntry = {
                 "line": matchDict.get("file"),
-                "warning_type": matchDict.get("type"),
-                "error_number": matchDict.get("errno"),
+                "warning_id": matchDict.get("type") + matchDict.get("errno"),
                 "warning_hint": matchDict.get("hint"),
             }
 
