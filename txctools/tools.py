@@ -47,7 +47,12 @@ def parsePyLintWarnings(warnings):
 
 
 def cleanupMessage(warning, winfo):
+    """
+    Cleans up pyLint messages, suitable for display.
 
+    @param warning: The warning ID.
+    @param winfo: A L{dict} containing the message in a key named "message".
+    """
     cleanupItems = {
         "C0102": "Blacklisted name",
         "C0103": "Invalid function/variable name",

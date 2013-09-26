@@ -61,6 +61,11 @@ class HotspotReport:
 
 
     def deliverTextResults(self):
+        """
+        Deliver the results in a pretty text output.
+
+        @return: Pretty text output!
+        """
 
         output = "=======================\ntxctools Hotspot Report\n"\
         "=======================\n\n"
@@ -96,7 +101,16 @@ class HotspotReport:
 
 
     def _warnCount(self, warnings, warningCount=None):
+        """
+        Calculate the count of each warning, being given a list of them.
 
+        @param warnings: L{list} of L{dict}s that come from
+            L{tools.parsePyLintWarnings}.
+        @param warningCount: A L{dict} produced by this method previously, if
+            you are adding to the warnings.
+
+        @return: L{dict} of L{dict}s for the warnings.
+        """
         if not warningCount:
             warningCount = {}
 
