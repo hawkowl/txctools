@@ -17,6 +17,7 @@ class HotspotReport:
         self.fileCounts = {}
         self.warningCounts = {}
 
+
     def process(self):
 
         for filename, warnings in self.warnings.iteritems():
@@ -29,9 +30,31 @@ class HotspotReport:
             self.warningCounts = self._warnCount(warnings,
                 warningCount=self.warningCounts)
 
-    def deliverResults(self):
+
+    def deliverRawResults(self):
 
         return (self.fileCounts, self.warningCounts)
+
+
+    def deliverTextResults(self):
+
+        output = "=======================\ntxctools HotSpot Report\n"\
+        "=======================\n\n"
+
+        fileResults = sorted(self.fileCounts.items(),
+            key=lambda x: x[1]["warning_count"], reverse=True)
+
+        output += "Warnings per File\n=================\n"
+
+        count = 0
+
+        for item in fileResults:
+            count += 1
+            output += "#%s - %s - %s\n" %(count, item[0],
+                item[1]["warning_count"])
+
+        return output
+
 
     def _warnCount(self, warnings, warningCount=None):
 

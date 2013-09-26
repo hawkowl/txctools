@@ -9,4 +9,4 @@ from txctools.reports import HotspotReport
 
 report = HotspotReport(sys.stdin)
 report.process()
-print json.dumps(report.deliverResults())
+print report.deliverTextResults()
